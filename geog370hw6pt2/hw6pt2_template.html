@@ -8,7 +8,7 @@
 <body>
 <h1>Homework 6 pt 2: Census data choropleths </h1>
 <h2>Jacob Horner</h2>
-<h3>Ratio of those holding bachelor's degree or higher to total population, categorized using natural breaks</h3>
+<h3>Ratio of those holding bachelor's degree or higher to total population, categorized using Jenks natural breaks</h3>
 <!-- Your map goes here -->
 <a href="./naturalbreaksmap.png">
     <img src="./naturalbreaksmap.png" alt="Natural Breaks Categorization" width='500px'>
@@ -35,7 +35,12 @@
     Without the ratio, larger counties were disproportionately favored.
 
     Each classification scheme had its pros and cons.
-    The natural breaks category 
+    The Jenks natural breaks category seeks to normalize data through the use of an algorithm to present less deceptive omages.
+    The downside is that it is not intended for use with more than 5 different breaks in a data set
+    The equal count quantile feature attempts to put the same amount of features in each bin.
+    This helps keep the features equal, but it can also lead to bins that do not make intuitve sense.
+    The pretty breaks feature puts breaks in the data so that bin ranges are in increments of 10. This is an intuitive way to sort the data,
+    but it can distort the message that the author is trying to convey with the map.
 
 </body>
 </html>
