@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/illinois_counties_0.js"></script>
+        <script src="data/illinois_choropleth_1.js"></script>
+        <script src="data/cleanillionoisdata_2.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[35.63575459213629,-95.63493317025917],[43.69227581023569,-82.23923427750083]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_illinois_counties_0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STATEFP'] !== null ? autolinker.link(feature.properties['STATEFP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COUNTYFP'] !== null ? autolinker.link(feature.properties['COUNTYFP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COUNTYNS'] !== null ? autolinker.link(feature.properties['COUNTYNS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GEOID'] !== null ? autolinker.link(feature.properties['GEOID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMELSAD'] !== null ? autolinker.link(feature.properties['NAMELSAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LSAD'] !== null ? autolinker.link(feature.properties['LSAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CLASSFP'] !== null ? autolinker.link(feature.properties['CLASSFP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MTFCC'] !== null ? autolinker.link(feature.properties['MTFCC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CSAFP'] !== null ? autolinker.link(feature.properties['CSAFP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CBSAFP'] !== null ? autolinker.link(feature.properties['CBSAFP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METDIVFP'] !== null ? autolinker.link(feature.properties['METDIVFP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FUNCSTAT'] !== null ? autolinker.link(feature.properties['FUNCSTAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ALAND'] !== null ? autolinker.link(feature.properties['ALAND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AWATER'] !== null ? autolinker.link(feature.properties['AWATER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INTPTLAT'] !== null ? autolinker.link(feature.properties['INTPTLAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INTPTLON'] !== null ? autolinker.link(feature.properties['INTPTLON'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_state_id'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_state_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_state_abbr'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_state_abbr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_county_state_name'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_county_state_name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_county_name'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_county_name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_latitude'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_longitude'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_consolidated_city-county'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_consolidated_city-county'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_population'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_population'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_population_cohort'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_population_cohort'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_employment'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_employment'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_employment_cohort'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_employment_cohort'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_doe_climate_zone'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_doe_climate_zone'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_cohort'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_cohort'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_consumption_MWh'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_consumption_MWh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_illinois_counties_0_0(feature) {
+            if (feature.properties['cleanillionoisdata_consumption_MWh'] >= 18806.000000 && feature.properties['cleanillionoisdata_consumption_MWh'] <= 224040.000000 ) {
+                return {
+                pane: 'pane_illinois_counties_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,252,245,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['cleanillionoisdata_consumption_MWh'] >= 224040.000000 && feature.properties['cleanillionoisdata_consumption_MWh'] <= 691882.000000 ) {
+                return {
+                pane: 'pane_illinois_counties_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,234,195,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['cleanillionoisdata_consumption_MWh'] >= 691882.000000 && feature.properties['cleanillionoisdata_consumption_MWh'] <= 1451119.000000 ) {
+                return {
+                pane: 'pane_illinois_counties_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(123,200,124,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['cleanillionoisdata_consumption_MWh'] >= 1451119.000000 && feature.properties['cleanillionoisdata_consumption_MWh'] <= 2736785.000000 ) {
+                return {
+                pane: 'pane_illinois_counties_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(42,146,74,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['cleanillionoisdata_consumption_MWh'] >= 2736785.000000 && feature.properties['cleanillionoisdata_consumption_MWh'] <= 14290976.000000 ) {
+                return {
+                pane: 'pane_illinois_counties_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,68,27,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_illinois_counties_0');
+        map.getPane('pane_illinois_counties_0').style.zIndex = 400;
+        map.getPane('pane_illinois_counties_0').style['mix-blend-mode'] = 'normal';
+        var layer_illinois_counties_0 = new L.geoJson(json_illinois_counties_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_illinois_counties_0',
+            layerName: 'layer_illinois_counties_0',
+            pane: 'pane_illinois_counties_0',
+            onEachFeature: pop_illinois_counties_0,
+            style: style_illinois_counties_0_0,
+        });
+        bounds_group.addLayer(layer_illinois_counties_0);
+        map.addLayer(layer_illinois_counties_0);
+        function pop_illinois_choropleth_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STATEFP'] !== null ? autolinker.link(feature.properties['STATEFP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COUNTYFP'] !== null ? autolinker.link(feature.properties['COUNTYFP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COUNTYNS'] !== null ? autolinker.link(feature.properties['COUNTYNS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GEOID'] !== null ? autolinker.link(feature.properties['GEOID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMELSAD'] !== null ? autolinker.link(feature.properties['NAMELSAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LSAD'] !== null ? autolinker.link(feature.properties['LSAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CLASSFP'] !== null ? autolinker.link(feature.properties['CLASSFP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MTFCC'] !== null ? autolinker.link(feature.properties['MTFCC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CSAFP'] !== null ? autolinker.link(feature.properties['CSAFP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CBSAFP'] !== null ? autolinker.link(feature.properties['CBSAFP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METDIVFP'] !== null ? autolinker.link(feature.properties['METDIVFP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FUNCSTAT'] !== null ? autolinker.link(feature.properties['FUNCSTAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ALAND'] !== null ? autolinker.link(feature.properties['ALAND'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AWATER'] !== null ? autolinker.link(feature.properties['AWATER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INTPTLAT'] !== null ? autolinker.link(feature.properties['INTPTLAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INTPTLON'] !== null ? autolinker.link(feature.properties['INTPTLON'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_state_id'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_state_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_state_abbr'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_state_abbr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_county_state_name'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_county_state_name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_county_name'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_county_name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_latitude'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_longitude'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_consolidated_city-county'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_consolidated_city-county'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_population'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_population'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_population_cohort'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_population_cohort'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_employment'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_employment'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_employment_cohort'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_employment_cohort'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_doe_climate_zone'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_doe_climate_zone'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_cohort'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_cohort'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cleanillionoisdata_consumption_MWh'] !== null ? autolinker.link(feature.properties['cleanillionoisdata_consumption_MWh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_illinois_choropleth_1_0() {
+            return {
+                pane: 'pane_illinois_choropleth_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_illinois_choropleth_1');
+        map.getPane('pane_illinois_choropleth_1').style.zIndex = 401;
+        map.getPane('pane_illinois_choropleth_1').style['mix-blend-mode'] = 'normal';
+        var layer_illinois_choropleth_1 = new L.geoJson(json_illinois_choropleth_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_illinois_choropleth_1',
+            layerName: 'layer_illinois_choropleth_1',
+            pane: 'pane_illinois_choropleth_1',
+            onEachFeature: pop_illinois_choropleth_1,
+            style: style_illinois_choropleth_1_0,
+        });
+        bounds_group.addLayer(layer_illinois_choropleth_1);
+        map.addLayer(layer_illinois_choropleth_1);
+        function pop_cleanillionoisdata_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['state_id'] !== null ? autolinker.link(feature.properties['state_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['state_abbr'] !== null ? autolinker.link(feature.properties['state_abbr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['county_state_name'] !== null ? autolinker.link(feature.properties['county_state_name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['county_id'] !== null ? autolinker.link(feature.properties['county_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['county_name'] !== null ? autolinker.link(feature.properties['county_name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['latitude'] !== null ? autolinker.link(feature.properties['latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['longitude'] !== null ? autolinker.link(feature.properties['longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['consolidated_city-county'] !== null ? autolinker.link(feature.properties['consolidated_city-county'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['population'] !== null ? autolinker.link(feature.properties['population'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['population_cohort'] !== null ? autolinker.link(feature.properties['population_cohort'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['employment'] !== null ? autolinker.link(feature.properties['employment'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['employment_cohort'] !== null ? autolinker.link(feature.properties['employment_cohort'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['doe_climate_zone'] !== null ? autolinker.link(feature.properties['doe_climate_zone'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cohort'] !== null ? autolinker.link(feature.properties['cohort'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['consumption_MWh'] !== null ? autolinker.link(feature.properties['consumption_MWh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_cleanillionoisdata_2_0() {
+            return {
+                pane: 'pane_cleanillionoisdata_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,113,72,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_cleanillionoisdata_2');
+        map.getPane('pane_cleanillionoisdata_2').style.zIndex = 402;
+        map.getPane('pane_cleanillionoisdata_2').style['mix-blend-mode'] = 'normal';
+        var layer_cleanillionoisdata_2 = new L.geoJson(json_cleanillionoisdata_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_cleanillionoisdata_2',
+            layerName: 'layer_cleanillionoisdata_2',
+            pane: 'pane_cleanillionoisdata_2',
+            onEachFeature: pop_cleanillionoisdata_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_cleanillionoisdata_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_cleanillionoisdata_2);
+        map.addLayer(layer_cleanillionoisdata_2);
+        setBounds();
+        </script>
+    </body>
+</html>
