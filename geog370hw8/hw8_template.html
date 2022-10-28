@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 8</title>
+</head>
+<body>
+<h1>Homework 8: Cabarrus County Recreation Facilities within a 3 mile radius of Cox Mill High School </h1>
+<h2>Jacob Horner</h2>
+<h3>This map answers the pressing question: how many Cabarrus County recreation facilities are within a 3 mile radius of Cox Mill High School?
+    The first step to answering this question was to make a 3 mile buffer around the Cox Mill High School polygon. 
+    The next step was to make a clip between the buffer layer and the Cabarrus County basemap layer.
+    The clip layer indicates that there are 5 Cabarrus County recreation facilities within a 3 mile radius of Cox Mill High School.
+    This information should be of great concern for everyone with ties to UNC, as it pertains to our star basketball player Leaky Black.
+    Leaky Black attended Cox Mill High School during his senior year of high school. With this map, we can visualize the facilities he had access to
+    during his development as an elite college basketball player. 
+    .</h3>
+<!-- Your map goes here -->
+<a href="hw8mappng.png">
+    <img src="hw8mappng.png" alt="Cabarrus County Recreation Facilities within a 3 mile radius of Cox Mill High School" width='500px'>
+    </a>
+
+<!-- Link to your shapefile in Github and you CSV -->
+<h2>Data used for this project</h2>
+    <a href="Cabarrus_County_NC_boundary/Cabarrus_County_NC_boundary.shp"> Cabarrus County Base Map </a>
+    <p></p>
+    <a href="Recreation_Facilities/Recreation_Facilities.shp"> Recreation Facilities shape file </a>
+    <p></p>
+    <a href="Schools/Schools.shp"> Schools shape file altered to show only Cox Mill High School </a>
+    <p></p>
+  
+    <h2>Data created for this project</h2>
+    <a href="hw8bufferlayer.gpkg"> Buffer layer created </a>
+    <p></p>
+    <a href="hw8cliplayer.gpkg"> Clip layer created </a>
+    <p></p>
+
+</body>
+</html>
